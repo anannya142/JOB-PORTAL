@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import './config/instrument.js'
+import bodyParser from "body-parser";
 
 console.log("Environment check:");
 console.log("CLERK_WEBHOOK_SECRET exists:", !!process.env.CLERK_WEBHOOK_SECRET);
@@ -36,7 +37,11 @@ app.get('/health', (req, res) => {
     });
 });
 
-app.post('/webhooks',clerkWebhooks);
+// app.post('/webhooks',clerkWebhooks);
+app.post("/webhooks",
+  bodyParser.raw({type:"aplication/json"}),
+  clerkWebhooks
+);
 //Test webhook endpoint (for manual testing)
 app.get('/test-webhook', (req, res) => {
     console.log('Test webhook endpoint hit');
