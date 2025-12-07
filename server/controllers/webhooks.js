@@ -30,7 +30,8 @@ export const clerkWebhooks = async (req, res) => {
 
         //Create a Svix instance with clerk webhook secret that knows how to verify signatures..
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
-
+        // IMPORTANT: For Vercel, req.body is already parsed as JSON
+        // So we need to use the stringified version
         //Verifying Headers
         await whook.verify(JSON.stringify(req.body),
             {

@@ -26,7 +26,7 @@ app.get('/', (req,res)=> res.json("API Working"))
 app.get("/debug-sentry", function mainHandler(req, res) {
   throw new Error("My first Sentry error!");
 });
-// ✅ Health check route
+// Health check route
 app.get('/health', (req, res) => {
     res.json({ 
         status: 'ok', 
@@ -37,7 +37,7 @@ app.get('/health', (req, res) => {
 });
 
 app.post('/webhooks',clerkWebhooks);
-// ✅ Test webhook endpoint (for manual testing)
+//Test webhook endpoint (for manual testing)
 app.get('/test-webhook', (req, res) => {
     console.log('Test webhook endpoint hit');
     res.json({
