@@ -39,9 +39,11 @@ app.get('/health', (req, res) => {
 
 // app.post('/webhooks',clerkWebhooks);
 app.post("/webhooks",
-  bodyParser.raw({type:"aplication/json"}),
+  bodyParser.raw({type:"application/json"}),
   clerkWebhooks
 );
+
+
 //Test webhook endpoint (for manual testing)
 app.get('/test-webhook', (req, res) => {
     console.log('Test webhook endpoint hit');
