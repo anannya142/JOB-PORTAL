@@ -63,7 +63,7 @@ const ApplyJob = () => {
               </div>
             </div>
             <div className="flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center">
-              <button className="bg-blue-600 p-2 px-10 text-white rounded ">
+              <button className="bg-purple-700 p-2 px-10 text-white rounded ">
                 Apply Now
               </button>
               <p className="mt-1 text-gray">
@@ -75,7 +75,7 @@ const ApplyJob = () => {
             <div className="w-full lg:w-2/3">
               <h2 className="font-bold text-2xl mb-4">Job Description</h2>
               <div className="rich-text" dangerouslySetInnerHTML={{ __html: jobData.description }} />
-              <button className="bg-blue-600 p-2 px-10 text-white rounded mt-10 ">
+              <button className="bg-purple-700 p-2 px-10 text-white rounded mt-10 ">
                 Apply Now
               </button>
             </div>
@@ -84,7 +84,7 @@ const ApplyJob = () => {
               <h2>More Jobs From {jobData.companyId.name}</h2>
               {jobs.filter(job=> job._id !== jobData._id && job.companyId._id === jobData.companyId._id)  //job._id !== jobData._id — exclude the job the user is currently viewing (so you don’t show it in “More jobs”). keep only jobs that belong to the same company as jobData.*/}
               .filter( job =>true).slice(0,4) 
-              .map((job,index)=><JobCard key={index} job={job}/>)}    //converts each job object into a React component
+              .map((job,index)=><JobCard key={index} job={job}/>)}   
             </div>
           </div>
         </div>

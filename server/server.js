@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import './config/instrument.js'
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 
 console.log("Environment check:");
 console.log("CLERK_WEBHOOK_SECRET exists:", !!process.env.CLERK_WEBHOOK_SECRET);
@@ -11,7 +11,7 @@ import  cors from 'cors'
 import connectDB from './config/db.js'
 import * as Sentry from "@sentry/node"
 import { clerkWebhooks } from './controllers/webhooks.js'
-
+import companyRoutes from './routes/companyRoutes.js'
 //Initialize Express
 const app = express()
 //connect to database
@@ -39,9 +39,10 @@ app.get('/health', (req, res) => {
 
 // app.post('/webhooks',clerkWebhooks);
 app.post("/webhooks",
-  bodyParser.raw({type:"application/json"}),
+ 
   clerkWebhooks
 );
+app.use('/api/company', companyRoutes);
 
 
 //Test webhook endpoint (for manual testing)

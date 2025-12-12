@@ -11,7 +11,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { setShowRecruiterLogin } = useContext(AppContext);
   return (
-    <div className="shadow py-4">
+    <div className="shadow py-4 bg-blue-40 border border-blue-300 ">
+   
       <div className="container px-4 2xl:px-20 mx-auto flex justify-between items-center">
         <img
           onClick={() => navigate("/")}
