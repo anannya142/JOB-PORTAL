@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
-const userSchema = new mongoose.Schema({
-    _id: {type:String , required:true},
-    name : {type:String , required:true},
-    email:{type:String} ,
-    resume:{type:String , default: "" },
-    image:{type:String , required:true},
-})
-const User = mongoose.model('User', userSchema);
-export default User;
+// import mongoose from "mongoose";
+// const userSchema = new mongoose.Schema({
+//     _id: {type:String , required:true},
+//     name : {type:String , required:true},
+//     email:{type:String} ,
+//     resume:{type:String , default: "" },
+//     image:{type:String , required:true},
+// })
+// const User = mongoose.model('User', userSchema);
+// export default User;
 
 // import mongoose from "mongoose";
 
@@ -64,3 +64,22 @@ export default User;
 
 // const User = mongoose.models.User || mongoose.model('User', userSchema);
 // export default User;
+import mongoose from "mongoose";
+
+const userSchema = new mongoose.Schema(
+  {
+    clerkId: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    role: {
+      type: String,
+      enum: ["candidate", "recruiter"],
+      default: "candidate"
+    }
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("User", userSchema);

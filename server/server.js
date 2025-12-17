@@ -10,17 +10,22 @@ import  cors from 'cors'
 
 import connectDB from './config/db.js'
 import * as Sentry from "@sentry/node"
-import { clerkWebhooks } from './controllers/webhooks.js'
+import userRoutes from "./routes/userRoutes.js";
+// import { clerkWebhooks } from './controllers/webhooks.js'
 import companyRoutes from './routes/companyRoutes.js'
+import connectCloudinary from './config/cloudinary.js'
 //Initialize Express
 const app = express()
-//connect to database
-await connectDB()
-
 
 //Middleware
 app.use(cors())
 app.use(express.json())
+//connect to database
+await connectDB()
+await connectCloudinary()
+
+
+
 
 //Routes
 app.get('/', (req,res)=> res.json("API Working"))
@@ -38,10 +43,11 @@ app.get('/health', (req, res) => {
 });
 
 // app.post('/webhooks',clerkWebhooks);
-app.post("/webhooks",
+// app.post("/webhooks",
  
-  clerkWebhooks
-);
+//   clerkWebhooks
+// );
+app.use("/api/user", userRoutes);
 app.use('/api/company', companyRoutes);
 
 

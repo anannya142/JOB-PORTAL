@@ -1,45 +1,74 @@
-import  { createContext ,useEffect,useState} from "react";
+import { createContext, useEffect, useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
 import { jobsData } from "../assets/assets";
 
-
 export const AppContext = createContext();
-export const AppContextProvider = (props) =>{
-      //object to take data on a state to the first input field
 
-    const [searchFilter,setSearchFilter] = useState({
-        title:'',
-        location:'',
+export const AppContextProvider = (props) => {
+  // search state
+  const [searchFilter, setSearchFilter] = useState({
+    title: "",
+    location: "",
+  });
 
-    });
+  const [isSearched, setIsSearched] = useState(false);
+  const [jobs, setJobs] = useState([]);
+  const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
 
-    const [isSearched,setIsSearched] = useState(false);
-    const [jobs, setJobs] = useState([]);
-    const [showRecruiterLogin ,setShowRecruiterLogin] = useState(false);
-    
-    //Funtions for fetch jobs
-    const fetchJobs = async() =>{
-        setJobs(jobsData)
+  // 🔐 Clerk auth
+  const { isSignedIn, getToken } = useAuth();
+   console.log("isSignedIn:", isSignedIn);
 
-    }
-    useEffect(()=>{
-        fetchJobs()
+  // fetch jobs (your existing logic)
+  const fetchJobs = async () => {
+    setJobs(jobsData);
+  };
 
-    },[])
-  
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
-    
-    const value={
-        searchFilter,setSearchFilter,
-        isSearched,setIsSearched,
-        jobs,setJobs,showRecruiterLogin ,setShowRecruiterLogin,
-
-    }
-    return (
-            <AppContext.Provider  value={value}>
-                  {props.children}
-
-             </AppContext.Provider>
-)
+  // ✅ USER SYNC (runs once after login)
+  useEffect(() => {
+    const syncUser = async () => {
+      if (!isSignedIn) return;
+     
 
 
+      try {
+        const token = await getToken();
+
+        await fetch(
+          `${import.meta.env.VITE_API_URL}/api/user/sync`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        console.error("User sync failed:", error);
+      }
+    };
+
+    syncUser();
+  }, [isSignedIn]);
+
+  const value = {
+    searchFilter,
+    setSearchFilter,
+    isSearched,
+    setIsSearched,
+    jobs,
+    setJobs,
+    showRecruiterLogin,
+    setShowRecruiterLogin,
+  };
+
+  return (
+    <AppContext.Provider value={value}>
+      {props.children}
+    </AppContext.Provider>
+  );
 };
