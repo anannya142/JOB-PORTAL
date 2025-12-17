@@ -52,15 +52,15 @@ app.use('/api/company', companyRoutes);
 
 
 //Test webhook endpoint (for manual testing)
-app.get('/test-webhook', (req, res) => {
-    console.log('Test webhook endpoint hit');
-    res.json({
-        message: 'Webhook endpoint is accessible',
-        webhook_url: 'https://' + req.headers.host + '/webhooks',
-        method: 'POST',
-        required_headers: ['svix-id', 'svix-timestamp', 'svix-signature']
-    });
-});
+// app.get('/test-webhook', (req, res) => {
+//     console.log('Test webhook endpoint hit');
+//     res.json({
+//         message: 'Webhook endpoint is accessible',
+//         webhook_url: 'https://' + req.headers.host + '/webhooks',
+//         method: 'POST',
+//         required_headers: ['svix-id', 'svix-timestamp', 'svix-signature']
+//     });
+// });
 
 //Port
 const PORT = process.env.PORT || 5001
