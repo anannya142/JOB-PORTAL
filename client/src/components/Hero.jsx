@@ -19,7 +19,11 @@ const Hero = () => {
     }
   return (
     <div className='container 2xl_px-20 mx-auto my-10'>
-        <div className='bg-gradient-to-r from-blue-800 to-blue-950 text-white py-16 text-center mx-2 rounded-xl'>
+        <div 
+        // className='bg-gradient-to-r from-blue-800 to-blue-950 text-white py-16 text-center mx-2 rounded-xl'
+        className='dark:bg-gradient-to-r from-primary to-primary-foreground-600 bg-gradient-to-r from-blue-800 to-blue-950 text-white py-16 text-center mx-2 rounded-xl'
+
+        >
             <h2 className='text-2xl md:text-3xl lg:text-4xl font-medium mb-4 '>
                 Over 10,000+ jobs to apply
             </h2>
@@ -37,7 +41,7 @@ const Hero = () => {
                        placeholder='Location'
                        className='max-sm:text-xs p-2 rounded outline-none w-full'/>
                 </div>
-                <button onClick={onSearch} className='bg-purple-700 px-6 py-2 rounded text-white m-1'>Search</button>
+                <button onClick={onSearch} className='bg-primary px-6 py-2 rounded text-white m-1'>Search</button>
             </div>
         </div>
       
