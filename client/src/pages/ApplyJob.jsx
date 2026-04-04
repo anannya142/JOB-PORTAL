@@ -30,7 +30,7 @@ const ApplyJob = () => {
     <>
       <Navbar />
       <div className="min-h-screen flex flex-col container py-10 px-4 2xl:px-20 mx-auto">
-        <div className="bg-white text-black rounded-lg w-full">
+        <div className="bg-gray text-black rounded-lg w-full">
           <div className="flex justify-center md:justify-between flex-wrap gap-8 px-14 py-20 mb-6 bg-sky-50 border border-sky-400 rounded-xl">
             <div className="flex flex-col md:flex-row items-center">
               <img
@@ -39,7 +39,7 @@ const ApplyJob = () => {
                 alt=""
               />
               <div className="text-ceneter md:text-left text-neutral-700">
-                <h1 className="text-2xl sm:text-4xl font-medium">
+                <h1 className="text-2xl sm:text-4xl font-medium ">
                   {jobData.title}
                 </h1>
                 <div className="flex flex-row flex-wrap max-md:justify-center gap-y-2 gap-6 items-center text-gray-600 mt-2">
@@ -73,7 +73,7 @@ const ApplyJob = () => {
           </div>
           <div className="flex flex-col lg:flex-row justify-between items-start ">
             <div className="w-full lg:w-2/3">
-              <h2 className="font-bold text-2xl mb-4">Job Description</h2>
+              <h2 className="font-bold text-2xl mb-4 text-gray-800 dark:text-gray-200">Job Description</h2>
               <div className="rich-text" dangerouslySetInnerHTML={{ __html: jobData.description }} />
               <button className="bg-purple-700 p-2 px-10 text-white rounded mt-10 ">
                 Apply Now

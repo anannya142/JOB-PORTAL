@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import logo_dark from "./logo_dark.svg";
 import search_icon from "./search_icon.svg";
 import company_icon from "./company_icon.svg";
 import microsoft_logo from "./microsoft_logo.svg";
@@ -19,9 +20,12 @@ import app_store from './app_store.svg';
 import back_arrow_icon from './back_arrow_icon.svg';
 import left_arrow_icon from './left_arrow_icon.svg';
 import right_arrow_icon from './right_arrow_icon.svg';
-import facebook_icon from './facebook_icon.svg'
-import instagram_icon from './instagram_icon.svg'
+import facebook_icon from './facebook_icon.svg';
+import facebook_icon_dark from './facebook_icon_dark.svg';
+import instagram_icon from './instagram_icon.svg';
+import instagram_icon_dark from './instagram_icon_dark.svg'
 import twitter_icon from './twitter_icon.svg'
+import twitter_icon_dark from './twitter_icon_dark.svg'
 import home_icon from './home_icon.svg'
 import add_icon from './add_icon.svg'
 import profile_upload_icon from './profile_upload_icon.svg'
@@ -36,6 +40,7 @@ import amazon_logo from './amazon_logo.png'
 
 export const assets = {
     logo,
+    logo_dark,
     search_icon,
     cross_icon,
     upload_area,
@@ -56,8 +61,13 @@ export const assets = {
     suitcase_icon,
     person_icon,
     facebook_icon,
+    facebook_icon_dark,
     instagram_icon,
+    instagram_icon_dark,
     twitter_icon,
+    twitter_icon,
+    twitter_icon_dark,
+
     home_icon,
     add_icon,
     person_tick_icon,

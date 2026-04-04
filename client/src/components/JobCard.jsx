@@ -7,9 +7,11 @@ const JobCard = ({job}) => {
   const navigate = useNavigate();
   return (
     <div 
-    className=' border p-6 shadow rounded-xl bg-gray border border-dark-300 dark:border-blue-300 dark:bg-gradient-to-r from-primary-foreground-200 to-primary'
+    // className=' border p-6 shadow rounded-xl bg-gray border border-blue-300 dark:border-purple-300 '
     // className=' border p-6 shadow rounded-xl bg-blue-40 border border-blue-300 dark:border-blue-700 dark:bg-gradient-to-l from-purple-700 to-purple-800 to-primary'
+    className=' p-6 shadow-xs rounded-xl bg-gray border border-blue-300 dark:bg-card dark:border-none'
     >
+      
         <div className='flex justify-between items-center'>
             <img  className='h-8'src={assets.company_icon} alt=''/>
         </div>
