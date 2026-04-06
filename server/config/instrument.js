@@ -2,8 +2,6 @@
 import * as Sentry from "@sentry/node";
 
 
-
-
 Sentry.init({
   dsn: "https://685d58671c3dfec9189a0e090ac843bf@o4510189802684416.ingest.de.sentry.io/4510189809958992",
   // integrations : [

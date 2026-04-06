@@ -1,19 +1,23 @@
-
+import './config/instrument.js'
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import * as Sentry from "@sentry/node";
+
 
 import connectDB from './config/db.js';
+import * as Sentry from "@sentry/node";
 import connectCloudinary from './config/cloudinary.js';
 import userRoutes from './routes/userRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
 import { clerkWebhooks } from './controllers/webhooks.js';
+import jobRoutes from './routes/jobRoutes.js'
+import { clerkMiddleware} from '@clerk/express';
 
 const app = express();
 
 // --- Middleware ---
 app.use(cors());
+app.use(clerkMiddleware())
 
 // --- Raw body parser only for webhooks ---
 app.use('/webhooks', express.raw({ type: '*/*' }));
@@ -27,7 +31,9 @@ await connectCloudinary();
 
 // --- Routes ---
 app.get('/', (req, res) => res.json("API Working"));
-
+app.get("/debug-sentry", function mainHandler(req, res) {
+  throw new Error("My first Sentry error!");
+});
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -42,14 +48,18 @@ app.post('/webhooks', clerkWebhooks);
 // --- API routes ---
 app.use('/api/user', userRoutes);
 app.use('/api/company', companyRoutes);
+app.use('/api/jobs', jobRoutes);
+
+
+// --- Start server ---
+const PORT = process.env.PORT || 5001;
 
 // --- Sentry error handler ---
 Sentry.setupExpressErrorHandler(app);
 
-// --- Start server ---
-const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
 export default app;
+
