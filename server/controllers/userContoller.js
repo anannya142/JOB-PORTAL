@@ -1,5 +1,18 @@
+
+import User from "../models/User"
+
 //get user data
 export const getUserData = async(req,res) =>{
+    const userId = req.auth.userId
+try {
+    const user = await User.findById(userId)
+    if(!user){
+        return res.json({success: false , message: 'User not found' })
+    }
+} catch (error) {
+    res.json({success:false, message:error.message})
+    
+}
 
 }
 
