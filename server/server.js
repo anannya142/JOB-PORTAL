@@ -16,7 +16,16 @@ import { clerkMiddleware} from '@clerk/express';
 const app = express();
 
 // --- Middleware ---
-app.use(cors());
+// app.use(cors());
+
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",  // local dev
+    "https://job-portal-steel-rho-38.vercel.app" // your deployed frontend
+  ],
+  credentials: true
+}));
 app.use(clerkMiddleware())
 
 // --- Raw body parser only for webhooks ---
