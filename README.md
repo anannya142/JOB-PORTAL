@@ -33,7 +33,11 @@ A production-ready full-stack job portal that bridges the gap between job seeker
 ### 🏢 Employer
 - Create, update, and delete job listings
 - Manage all posted jobs from employer dashboard
-
+  
+### 🔐 Authentication
+- Job Seekers → Clerk (OAuth, social login)
+- Recruiters  → JWT (token based authentication)
+  
 ### ⚙️ General
 - Responsive design for all screen sizes
 - Real-time error monitoring via Sentry
