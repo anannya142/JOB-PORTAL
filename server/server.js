@@ -26,13 +26,19 @@ app.use(cors({
   ],
   credentials: true
 }));
-app.use(clerkMiddleware())
+
+
+
+
 
 // --- Raw body parser only for webhooks ---
 app.use('/webhooks', express.raw({ type: '*/*' }));
-
 // --- JSON parser for normal API routes ---
 app.use(express.json());
+app.use(clerkMiddleware())
+
+
+
 
 // --- Connect DB and Cloudinary ---
 await connectDB();
