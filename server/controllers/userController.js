@@ -3,13 +3,20 @@ import User from "../models/User.js"
 import JobApplication from "../models/JobApplication.js"
 import {v2 as cloudinary} from "cloudinary"
 
+
 //get user data
 export const getUserData = async(req,res) =>{
     const userId = req.auth.userId
+    console.log("auth",req.auth)
+    console.log("Userid",userId)
+    // const clerkId = req.auth.clerkId
 try {
     const user = await User.findById(userId)
+    // const user = await User.findOne({clerkId:userId})
     if(!user){
         return res.json({success: false , message: 'User not found' })
+    }else{
+         return res.json({success: true, user })
     }
 } catch (error) {
     res.json({success:false, message:error.message})
