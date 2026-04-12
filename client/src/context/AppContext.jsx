@@ -116,70 +116,31 @@ export const AppContextProvider = (props) => {
     syncUser();
   }, [isSignedIn]);
 
-//   useEffect(() => {
-//   const syncAndFetch = async () => {
-//     if (!isSignedIn){
-//       console.log("not signed in. returning")
-//       return
-//     } 
 
-//     try {
-//       const token = await getToken()
-//       if (!token) {
-//         console.log("No token !!")
-//         return
-
-//       }
-
-//       await fetch(`${apiUrl}/api/user/sync`, {
-//         method: "GET",
-//         headers: { Authorization: `Bearer ${token}` }
-//       })
-
-//       await fetchUserData() 
-     
-//     } catch (error) {
-//       console.error(error)
-//     }
-//   }
-
-//   syncAndFetch()
-// }, [isSignedIn]) 
   //Function to fetch user data
   const fetchUserData = async () => {
-    
     try {
-      
-      const token = await getToken()
-      if (!token) {
-        console.log("No token !!")
-        return  
-
-      }
-      console.log(token)
-
-      const { data } = await axios.get(apiUrl + '/api/user/user',
-        { headers: { Authorization: `Bearer ${token}` } })
-        console.log("Called the api. DATA:",data)
-        
-      if (data.success) {
-        setUserData(data.user)
-      } else {
-        toast.error(data.message)
-      }
-      
-
+      const token = await getToken();
+      const {data} = await axios.get(apiUrl+ '/api/user/user' ,
+        {headers:{Authorization:`Bearer ${token}`}})
+        if(data.success){
+          setUserData(data.user)
+        }else{
+          toast.error(data.message)
+        }
     } catch (error) {
       toast.error(error.message)
     }
+    setUserData()
+    
   }
 
 
   useEffect(() => {
-   
+     if(user){
       fetchUserData() 
     
-
+     }
 
   }
   , [user])
