@@ -1,38 +1,98 @@
 import { createContext, useEffect, useState } from "react";
-import { useAuth } from "@clerk/clerk-react";
-import { jobsData } from "../assets/assets";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import axios from 'axios'
+import { toast } from "react-toastify";
+
+
 
 export const AppContext = createContext();
-
 export const AppContextProvider = (props) => {
   // search state
   const [searchFilter, setSearchFilter] = useState({
     title: "",
     location: "",
   });
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [isSearched, setIsSearched] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
 
-  // 🔐 Clerk auth
-  const { isSignedIn, getToken } = useAuth();
-   console.log("isSignedIn:", isSignedIn);
+  const [companyToken, setCompanyToken] = useState(null)
+  const [companyData, setCompanyData] = useState(null)
 
-  // fetch jobs (your existing logic)
+  const [userData, setUserData] = useState(null)
+  const [userApplications, setUserApplications] = useState([])
+
+  // Clerk auth
+
+  const { isSignedIn, getToken } = useAuth();
+
+  const { user } = useUser();
+
+
+  // Funtion to fetch jobs (your existing logic)
   const fetchJobs = async () => {
-    setJobs(jobsData);
+    try {
+      const { data } = await axios.get(apiUrl + '/api/jobs')
+      if (data.success) {
+        setJobs(data.jobs);
+        
+
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+
   };
 
-  useEffect(() => {
-    fetchJobs();
-  }, []);
+ 
 
-  // ✅ USER SYNC (runs once after login)
+  //Function to fetch company data
+  const fetchCompanyData = async () => {
+    try {
+      const { data } = await axios.get(apiUrl + '/api/company/company', { headers: { token: companyToken } })
+      if (data.success) {
+        setCompanyData(data.company)
+        
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
+
+  useEffect(() => {
+
+    fetchJobs();
+      if (companyToken) {
+      fetchCompanyData()
+      }
+    const storedCompanyToken = localStorage.getItem('companyToken')
+
+  
+    if (storedCompanyToken) {
+      setCompanyToken(storedCompanyToken)
+    }
+  }, [companyToken]);
+  //  useEffect(() => {
+
+  //   fetchJobs();
+
+  //   if (companyToken) {
+  //     fetchCompanyData()
+  //   }
+  // }, [companyToken]);
+
+
+  // USER SYNC (runs once after login)
   useEffect(() => {
     const syncUser = async () => {
       if (!isSignedIn) return;
-     
+
 
 
       try {
@@ -47,6 +107,7 @@ export const AppContextProvider = (props) => {
             },
           }
         );
+        await fetchUserData()
       } catch (error) {
         console.error("User sync failed:", error);
       }
@@ -54,6 +115,74 @@ export const AppContextProvider = (props) => {
 
     syncUser();
   }, [isSignedIn]);
+
+//   useEffect(() => {
+//   const syncAndFetch = async () => {
+//     if (!isSignedIn){
+//       console.log("not signed in. returning")
+//       return
+//     } 
+
+//     try {
+//       const token = await getToken()
+//       if (!token) {
+//         console.log("No token !!")
+//         return
+
+//       }
+
+//       await fetch(`${apiUrl}/api/user/sync`, {
+//         method: "GET",
+//         headers: { Authorization: `Bearer ${token}` }
+//       })
+
+//       await fetchUserData() 
+     
+//     } catch (error) {
+//       console.error(error)
+//     }
+//   }
+
+//   syncAndFetch()
+// }, [isSignedIn]) 
+  //Function to fetch user data
+  const fetchUserData = async () => {
+    
+    try {
+      
+      const token = await getToken()
+      if (!token) {
+        console.log("No token !!")
+        return  
+
+      }
+      console.log(token)
+
+      const { data } = await axios.get(apiUrl + '/api/user/user',
+        { headers: { Authorization: `Bearer ${token}` } })
+        console.log("Called the api. DATA:",data)
+        
+      if (data.success) {
+        setUserData(data.user)
+      } else {
+        toast.error(data.message)
+      }
+      
+
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
+
+  useEffect(() => {
+   
+      fetchUserData() 
+    
+
+
+  }
+  , [user])
 
   const value = {
     searchFilter,
@@ -64,6 +193,15 @@ export const AppContextProvider = (props) => {
     setJobs,
     showRecruiterLogin,
     setShowRecruiterLogin,
+    companyToken,
+    setCompanyToken,
+    companyData,
+    setCompanyData,
+    apiUrl,
+    userData,
+    setUserData,
+    fetchUserData,
+
   };
 
   return (

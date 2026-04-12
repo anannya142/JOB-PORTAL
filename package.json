@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "@clerk/clerk-sdk-node": "^4.13.23"
+    "@clerk/clerk-sdk-node": "^4.13.23",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-toastify": "^11.0.5",
+    "svix": "^1.90.0"
   }
 }
