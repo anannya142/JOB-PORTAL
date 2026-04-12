@@ -23,7 +23,7 @@ router.post("/sync", requireAuth, async (req, res) => {
 });
 
 //get user data
-router.get('/user', getUserData);
+router.get('/user', requireAuth, getUserData);
 
 //apply for a job
 router.post('/apply', applyForJob );
