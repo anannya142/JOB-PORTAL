@@ -8,27 +8,43 @@ import kconvert from "k-convert";
 import moment from "moment";
 import JobCard from "../components/JobCard";
 import Footer from "../components/Footer";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ApplyJob = () => {
   const { id } = useParams();
   const [jobData, setJobData] = useState(null);
-  const { jobs } = useContext(AppContext);
+  const { jobs, apiUrl } = useContext(AppContext);
+
+  // Funtion to fatch jobs by id
+  
   const fetchJob = async () => {
-    const data = jobs.filter((job) => job._id === id);
-    if (data.length !== 0) {
-      setJobData(data[0]);
-      console.log(data[0]);
+ 
+    try {
+      const { data } = await axios.get(apiUrl + `/api/jobs/${id}`)
+      if (data.success) {
+        setJobData(data.job)
+      } else {
+        toast.error(data.message)
+
+      }
+    } catch (error) {
+      toast.error(error.message)
     }
-  };
+
+  }
+
 
   useEffect(() => {
-    if (jobs.length > 0) {
-      fetchJob();
-    }
-  }, [id, jobs]);
-  return jobData ? (
+
+    fetchJob()
+
+  }, [id])
+ 
+  return jobData  ? (
     <>
       <Navbar />
+      
       <div className="min-h-screen flex flex-col container py-10 px-4 2xl:px-20 mx-auto">
         <div className="bg-gray text-black rounded-lg w-full">
           <div className="flex justify-center md:justify-between flex-wrap gap-8 px-14 py-20 mb-6 bg-sky-50 border border-sky-400 rounded-xl">
@@ -81,15 +97,18 @@ const ApplyJob = () => {
             </div>
             {/* Right Section more jobs */}
             <div className='w-full lg:w-1/3 mt-8 lg:ml-8 space-y-5'>
-              <h2>More Jobs From {jobData.companyId.name}</h2>
-              {jobs.filter(job=> job._id !== jobData._id && job.companyId._id === jobData.companyId._id)  //job._id !== jobData._id — exclude the job the user is currently viewing (so you don’t show it in “More jobs”). keep only jobs that belong to the same company as jobData.*/}
-              .filter( job =>true).slice(0,4) 
-              .map((job,index)=><JobCard key={index} job={job}/>)}   
+              <h2>More Jobs From {jobData.companyId.name}</h2> 
+               
+              {jobs.filter(job => job._id !== jobData._id && job.companyId._id === jobData.companyId._id.toString())  
+                .filter(job => true).slice(0, 4)
+                .map((job, index) => <JobCard key={index} job={job} />)}
+
+            
             </div>
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   ) : (
     <Loading />
