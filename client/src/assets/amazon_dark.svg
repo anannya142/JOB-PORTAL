@@ -1,0 +1,12 @@
+<svg viewBox="0 0 400 220" width="100%" xmlns="http://www.w3.org/2000/svg" role="img"><defs><mask id="imagine-text-gaps-3773ch" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="400" height="220" fill="white"/><rect x="2.716580390930176" y="37.4444465637207" width="394.5668640136719" height="139.2777862548828" fill="black" rx="2"/></mask></defs>
+<title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Amazon logo dark mode</title>
+<desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Amazon logo matching original layout with white text and orange smile arrow on transparent background</desc>
+
+<text font-family="Arial Black, Arial, sans-serif" font-size="96" font-weight="900" fill="white" x="200" y="145" text-anchor="middle" letter-spacing="-3" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Arial Black&quot;, Arial, sans-serif;font-size:96px;font-weight:900;text-anchor:middle;dominant-baseline:auto">amazon</text>
+
+<!-- smile arrow matching original curve and position -->
+<path d="M58 162 Q200 205 342 162" stroke="#FF9900" stroke-width="7" fill="none" stroke-linecap="round" mask="url(#imagine-text-gaps-3773ch)" style="fill:none;stroke:rgb(255, 153, 0);color:rgb(0, 0, 0);stroke-width:7px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- arrowhead -->
+<path d="M330,155 L344,162 L333,172" fill="#FF9900" stroke="none" style="fill:rgb(255, 153, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+</svg>
