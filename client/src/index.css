@@ -207,7 +207,12 @@ Each @keyframes block describes a timeline of visual changes that happen over ti
     --border: 217 33% 25%;
   }
 
- 
+.dark .job-description *,
+.dark .rich-text * {
+  color: inherit !important;
+  background-color: transparent !important;  /* kills white bg */
+  background: transparent !important;        /* kills gradient bg too */
+}
 
   @layer base {
     :root {
