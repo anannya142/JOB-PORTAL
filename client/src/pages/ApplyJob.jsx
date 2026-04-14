@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
@@ -10,11 +10,16 @@ import JobCard from "../components/JobCard";
 import Footer from "../components/Footer";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAuth } from "@clerk/clerk-react";
 
 const ApplyJob = () => {
   const { id } = useParams();
-  const [jobData, setJobData] = useState(null);
-  const { jobs, apiUrl } = useContext(AppContext);
+  const {getToken} = useAuth();
+  const [jobData, setJobData,] = useState(null);
+  const { jobs, apiUrl , userData} = useContext(AppContext);
+  const navigate = useNavigate()
+
+
 
   // Funtion to fatch jobs by id
   
@@ -40,14 +45,38 @@ const ApplyJob = () => {
     fetchJob()
 
   }, [id])
- 
+  const applyHandler = async ()=>{
+    try {
+      if(!userData){
+        console.log(userData)
+        return toast.error('Login to apply for jobs')
+      }
+      if(!userData.resume){
+        navigate('/applications')
+        return toast.error('Upload Resume to apply')
+      }
+      
+      const token = await getToken()
+      const{data}= await axios.post(apiUrl+'/api/user/apply',
+      {jobId: jobData._id}, 
+      {headers:{Authorization: `Bearer ${token}`}})
+      if(data.success){
+         toast.success(data.message)
+        }else{
+          toast.error(data.message )
+        }
+    
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
   return jobData  ? (
     <>
       <Navbar />
       
       <div className="min-h-screen flex flex-col container py-10 px-4 2xl:px-20 mx-auto">
         <div className="bg-gray text-black rounded-lg w-full">
-          <div className="flex justify-center md:justify-between flex-wrap gap-8 px-14 py-20 mb-6 bg-sky-50 border border-sky-400 rounded-xl">
+          <div className="flex justify-center md:justify-between dark:bg-sky-200 flex-wrap gap-8 px-14 py-20 mb-6 bg-sky-50 border border-sky-400 rounded-xl">
             <div className="flex flex-col md:flex-row items-center">
               <img
                 className="h-24 bg-white rounded-lg p-4 mr-4 max-md:mb-4 border"
@@ -79,7 +108,7 @@ const ApplyJob = () => {
               </div>
             </div>
             <div className="flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center">
-              <button className="bg-purple-700 p-2 px-10 text-white rounded ">
+              <button className="bg-purple-700 p-2 px-10 text-white rounded " onClick={applyHandler}>
                 Apply Now
               </button>
               <p className="mt-1 text-gray">
@@ -91,7 +120,7 @@ const ApplyJob = () => {
             <div className="w-full lg:w-2/3">
               <h2 className="font-bold text-2xl mb-4 text-gray-800 dark:text-gray-200">Job Description</h2>
               <div className="rich-text" dangerouslySetInnerHTML={{ __html: jobData.description }} />
-              <button className="bg-purple-700 p-2 px-10 text-white rounded mt-10 ">
+              <button className="bg-purple-700 p-2 px-10 text-white rounded mt-10 "onClick={applyHandler}>
                 Apply Now
               </button>
             </div>
