@@ -78,17 +78,7 @@ export const AppContextProvider = (props) => {
       setCompanyToken(storedCompanyToken)
     }
   }, [companyToken]);
-  //  useEffect(() => {
 
-  //   fetchJobs();
-
-  //   if (companyToken) {
-  //     fetchCompanyData()
-  //   }
-  // }, [companyToken]);
-
-
-  // USER SYNC (runs once after login)
   useEffect(() => {
     const syncUser = async () => {
       if (!isSignedIn) return;
@@ -126,12 +116,12 @@ export const AppContextProvider = (props) => {
         if(data.success){
           setUserData(data.user)
         }else{
-          toast.error(data.message)
+          toast.error(data.message || "Error fetching user")
         }
     } catch (error) {
       toast.error(error.message)
     }
-    setUserData()
+    // setUserData()
     
   }
 
@@ -162,6 +152,8 @@ export const AppContextProvider = (props) => {
     userData,
     setUserData,
     fetchUserData,
+    userApplications,
+    setUserApplications,
 
   };
 
