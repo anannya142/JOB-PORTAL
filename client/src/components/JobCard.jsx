@@ -19,7 +19,7 @@ const JobCard = ({job}) => {
             <span className='bg-blue-50 dark:bg-slate-900 border border-blue-200 dark:border-slate-800 px-4 py-1.5 rounded dark:text-gray-200' >{job.location}</span>
             <span className='bg-blue-50 dark:bg-slate-900 border border-blue-200 dark:border-slate-800 px-4 py-1.5 rounded dark:text-gray-200' >{job.level}</span>
         </div>
-        <p className='text-gray-800 dark:text-gray-200 text-sm mt-4'dangerouslySetInnerHTML={{__html:job.description.slice(0,150)}}></p>
+        <p className='job-description text-gray-800 dark:text-primary text-sm mt-4'dangerouslySetInnerHTML={{__html:job.description.slice(0,150)}}></p>
         <div className='mt-4 flex gap-4 text-sm'>
             <button  onClick = {()=>{navigate(`/apply-job/${job._id}`); scrollTo(0,0)}} className='bg-primary text-white px-4 py-2 rounded'>Apply now</button>
             {/* <button className=' border-black-800 text-gray-500  px-4 py-2 rounded'>Learn more</button> */}

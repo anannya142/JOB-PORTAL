@@ -9,9 +9,11 @@ const router = express.Router();
 
 router.post("/sync", requireAuth, async (req, res) => {
   try {
-    const clerkId = req.clerkUserId
-    let user = await User.findOne({ clerkId });
+    // const userId = req.clerkUserId
+    // let user = await User.findOne({ clerkId : userId });
+    const clerkId = req.clerkUserId; 
 
+    let user = await User.findOne({ clerkId });
     if (!user) {
       // user = await User.create({ clerkId });
       const clerkUser = await clerkClient.users.getUser(clerkId)
@@ -35,12 +37,12 @@ router.post("/sync", requireAuth, async (req, res) => {
 router.get('/user', requireAuth, getUserData);
 
 //apply for a job
-router.post('/apply', applyForJob );
+router.post('/apply', requireAuth, applyForJob );
 
 //Get applied jobs data
-router.get('/applications',getUserJobApplications)
+router.get('/applications', requireAuth,getUserJobApplications)
 
 //update user profile
-router.post('/update-resume',upload.single('resume'),updateUserResume)
+router.post('/update-resume', requireAuth,upload.single('resume'),updateUserResume)
 
 export default router;

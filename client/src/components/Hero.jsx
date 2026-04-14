@@ -50,9 +50,11 @@ const Hero = () => {
             <p className='font-medium'>Trusted by</p>
             <img className='h-6' src={assets.microsoft_logo} alt="" />
             <img className='h-6' src={assets.walmart_logo} alt="" />
-            <img className='h-6' src={assets.accenture_logo} alt="" />
+            <img className='h-6 block dark:hidden' src={assets.accenture_logo} alt="" />
+            <img className='h-6 hidden dark:block' src={assets.accenture_dark} alt="" />
             <img className='h-6' src={assets.samsung_logo} alt="" />
-            <img className='h-6' src={assets.amazon_logo} alt="" />
+            <img className='h-6 block dark:hidden' src={assets.amazon_logo} alt="" />
+            <img className='h-6 hidden dark:block' src={assets.amazon_dark} alt="" />
             <img className='h-6' src={assets.adobe_logo} alt="" />
         </div>
        </div>
