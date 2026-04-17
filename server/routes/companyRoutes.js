@@ -16,7 +16,7 @@ router.get('/company', protectCompany, getCompanyData);
 router.post('/post-job',protectCompany,postJob)
 
 //Get Applicants Data of Company 
-router.get('/applications',protectCompany, getCompanyJobApplicants);
+router.get('/applicants',protectCompany, getCompanyJobApplicants);
 //Get company job list
 router.get('/list-jobs',protectCompany,getCompanyPostedJobs);
 //  Change application status

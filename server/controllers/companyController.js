@@ -1,4 +1,5 @@
 import Company from "../models/Company.js";
+import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import { v2 as cloudinary } from 'cloudinary';
 import generateToken from "../utils/generateToken.js"
@@ -114,9 +115,29 @@ export const postJob = async (req, res) => {
 }
 
 //Get Company Job applicants
-export const getCompanyJobApplicants = async (req, res) => {
 
-}
+export const getCompanyJobApplicants = async (req, res) => {
+  try {
+    const companyId = req.company._id;
+
+    const applications = await JobApplication.find({ companyId })
+      .populate("userId", "name image resume")
+      .populate("jobId", "title location category level salary")
+      .exec();
+
+    return res.json({
+      success: true,
+      applications
+    });
+
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 //get jobs data posted by company
 export const getCompanyPostedJobs = async (req, res) => {
     try {
@@ -136,7 +157,16 @@ export const getCompanyPostedJobs = async (req, res) => {
 }
 //Change job applications Status
 export const changeJobApplicationsStatus = async (req, res) => {
+  try {
+    const {id, status} = req.body
+    
+    //Find JobApplication and update the status
+    await JobApplication.findOneAndUpdate({_id: id},{status})
 
+    res.json({success:true, message: 'Status Changed'})
+  } catch (error) {
+    res.json({success:false, message: error.message})
+  }
 }
 //change job visibility
 export const changeJobVisibility = async (req, res) => {
