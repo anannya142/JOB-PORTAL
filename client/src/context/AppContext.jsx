@@ -21,7 +21,7 @@ export const AppContextProvider = (props) => {
   const [companyData, setCompanyData] = useState(null)
 
   const [userData, setUserData] = useState(null)
-  const [userApplications, setUserApplications] = useState([])
+  const [userApplications, setUserApplications,fetchUserApplication] = useState([])
 
   // Clerk auth
 
@@ -33,7 +33,7 @@ export const AppContextProvider = (props) => {
   // Funtion to fetch jobs (your existing logic)
   const fetchJobs = async () => {
     try {
-      const { data } = await axios.get(apiUrl + '/api/jobs')
+      const { data } = await axios.get(apiUrl+'/api/jobs')
       if (data.success) {
         setJobs(data.jobs);
         
@@ -52,7 +52,7 @@ export const AppContextProvider = (props) => {
   //Function to fetch company data
   const fetchCompanyData = async () => {
     try {
-      const { data } = await axios.get(apiUrl + '/api/company/company', { headers: { token: companyToken } })
+      const { data } = await axios.get(apiUrl+'/api/company/company', { headers: { token: companyToken } })
       if (data.success) {
         setCompanyData(data.company)
         
@@ -111,7 +111,7 @@ export const AppContextProvider = (props) => {
   const fetchUserData = async () => {
     try {
       const token = await getToken();
-      const {data} = await axios.get(apiUrl+ '/api/user/user' ,
+      const {data} = await axios.get(apiUrl+'/api/user/user' ,
         {headers:{Authorization:`Bearer ${token}`}})
         if(data.success){
           setUserData(data.user)
@@ -126,15 +126,33 @@ export const AppContextProvider = (props) => {
   }
 
 
-  useEffect(() => {
+
+  //Function to fetch user's applied application data
+  const fetchUserApplications = async () =>{
+    try {
+      const token = await getToken()
+        const {data} = await axios.get(apiUrl+'/api/user/applications',
+         {headers:{Authorization:`Bearer ${token}`}})
+         if(data.success){
+          setUserApplications(data.applications)
+         }else{
+          toast.error(data.message)
+         }
+    } catch (error) {
+      toast.error(error.message)
+      
+    }
+
+  } 
+    useEffect(() => {
      if(user){
       fetchUserData() 
+      fetchUserApplications()
     
      }
 
   }
   , [user])
-
   const value = {
     searchFilter,
     setSearchFilter,
@@ -154,6 +172,7 @@ export const AppContextProvider = (props) => {
     fetchUserData,
     userApplications,
     setUserApplications,
+    fetchUserApplications
 
   };
 

@@ -6,12 +6,13 @@ import { AppContext } from '../context/AppContext'
 import { useContext } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Loading from "../components/Loading";
 
 
 const ManageJobs = () => {
   const navigate = useNavigate()
 
-  const [jobs,setJobs] = useState([])
+  const [jobs,setJobs] = useState(false)
   const {apiUrl, companyToken}= useContext(AppContext)
 
   //Function to fetch company job aplications data
@@ -38,7 +39,7 @@ const ManageJobs = () => {
       fetchCompanyJobs()
     }
  },[companyToken])
-  return (
+  return jobs ? jobs.length=== 0 ? (<div className="flex items-center justify-center h-[70vh] "><p className="text-xl sm:text-2xl">No Applications Available </p></div>):(
     // So there’s p-4 16px of breathing space inside the div.5xl in Tailwind ≈ 64rem → 64 × 16 = 1024px
     <div className='container p-4 max-w-5xl'>
       <div className='overflow-x-auto'>
@@ -75,7 +76,7 @@ const ManageJobs = () => {
         <button onClick={()=>navigate('/dashboard/add-job')} className='bg-black text-white py-2 px-4 rounded '>Add new job</button>
       </div>
     </div>
-  )
+  ): <Loading/>
 }
 
 export default ManageJobs

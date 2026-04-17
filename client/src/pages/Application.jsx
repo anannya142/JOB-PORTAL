@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
-import { assets, jobsApplied } from '../assets/assets';
+// import { assets, jobsApplied } from '../assets/assets';
+import { assets } from '../assets/assets';
 import moment from 'moment';
 import Footer from '../components/Footer';
 import { useContext } from 'react';
@@ -15,7 +16,7 @@ const Application = () => {
   
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState(null)
-  const {apiUrl, userData,userApplications,fetchUserData} = useContext(AppContext)
+  const {apiUrl, userData,userApplications,fetchUserData,fetchUserApplications} = useContext(AppContext)
 
   
 
@@ -46,6 +47,12 @@ const Application = () => {
     setResume(null)
 
   }
+  useEffect(()=>{
+   if(user){
+        fetchUserApplications()
+   }
+
+  },[user])
   return (
     <>
       <Navbar />
@@ -64,7 +71,7 @@ const Application = () => {
                 <button onClick={updateResume} className=' border border-green-400 dark:text-primary rounded-lg px-4 py-2 '>Save</button>
               </>
               : <div  className='flex items-center gap-2 flex-wrap'>
-                <a className='bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 px-4 py-2 roundeded' href=''>
+                <a target ='_blank'href={userData.resume} className='bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 px-4 py-2 roundeded' >
                   Resume
                 </a>
               
@@ -89,15 +96,15 @@ const Application = () => {
             </tr>
           </thead>
           <tbody >
-            {jobsApplied.map((job,index) => true ? (
+            {userApplications.map((job,index) => true ? (
              
               <tr key={job._id || index} >
                 <td className='py-3 px-4  items-center gap-2 border-b text-foreground  whitespace-nowrap ' >
-                  <img className='w-8 h-8' src={job.logo} alt="" />
-                  {job.company}
+                  <img className='w-8 h-8' src={job.companyId.image} alt="" />
+                  {job.companyId.name}
                 </td>
-                <td className='py-2 px-4 border-b text-foreground'>{job.title}</td>
-                <td className='py-2 px-4 border-b   text-foreground max-sm:hidden' >{job.location}</td>
+                <td className='py-2 px-4 border-b text-foreground'>{job.jobId.title}</td>
+                <td className='py-2 px-4 border-b   text-foreground max-sm:hidden' >{job.jobId.location}</td>
                 <td className='py-2 px-4 border-b text-foreground max-sm:hidden' >{moment(job.date, "DD MMM, YYYY").format('ll')}</td>
                 <td className='py-2 px-4 border-b text-foreground' >
                   <span className={`${job.status === 'Accepted' ? 'bg-green-300' : job.status === 'Rejected' ? 'bg-red-300' :'bg-blue-300' } px-4 py-1.5 rounded`}>
