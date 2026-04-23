@@ -1,5 +1,5 @@
 import {React ,useEffect,useState } from 'react'
-// import { manageJobsData } from '../assets/assets'
+import { assets } from '../assets/assets'
 import moment from 'moment'
 import {useNavigate} from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
@@ -39,6 +39,26 @@ const ManageJobs = () => {
       fetchCompanyJobs()
     }
  },[companyToken])
+ 
+ const deleteJob = async (id) => {
+  try {
+    const { data } = await axios.delete(
+      `${apiUrl}/api/company/delete-job/${id}`,
+      { headers: { token: companyToken } }
+    );
+
+    if (data.success) {
+      toast.success("Job deleted successfully");
+      // Remove from local state instantly without refetching
+      setJobs(prev => prev.filter(job => job._id !== id));
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong");
+  }
+};
   return jobs ? jobs.length=== 0 ? (<div className="flex items-center justify-center h-[70vh] "><p className="text-xl sm:text-2xl">No Applications Available </p></div>):(
     // So there’s p-4 16px of breathing space inside the div.5xl in Tailwind ≈ 64rem → 64 × 16 = 1024px
     <div className='container p-4 max-w-5xl'>
@@ -52,6 +72,8 @@ const ManageJobs = () => {
               <th className='py-2 px-4 border-b text-left  max-sm:hidden'>Location</th>
               <th className='py-2 px-4 border-b text-center'>Applicants</th>
               <th className='py-2 px-4 border-b text-left'>Visible</th>
+              <th className='py-2 px-4 border-b text-left'>EDIT</th>
+              <th className='py-2 px-4 border-b text-left'>DELETE</th>
             </tr>
           </thead>
           <tbody>
@@ -66,6 +88,8 @@ const ManageJobs = () => {
                 <input className='scale-125 ml-4' type='checkbox'/>
                  
                 </td>
+                <td className='py-2 px-4 border-b text-center'> <img onClick={()=>navigate(`/dashboard/update-job/${job._id}`)}  className ='w-4 mr-4 sm:w-5 cursor-pointer' src={assets.edit_icon} alt=''/></td>
+                <td className='py-2 px-4 border-b text-center'><img onClick={() => deleteJob(job._id)} className ='w-4 mr-4 sm:w-5 cursor-pointer' src={assets.bin_icon} alt=''/></td>
 
               </tr>
             ))}

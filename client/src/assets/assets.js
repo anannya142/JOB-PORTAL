@@ -39,6 +39,8 @@ import adobe_logo from './adobe_logo.png'
 import amazon_logo from './amazon_logo.png'
 import amazon_dark from './amazon_dark.svg'
 import accenture_dark from './accenture_dark.svg'
+import bin_icon from './bin_icon.png'
+import edit_icon from './edit_icon.svg'
 export const assets = {
     logo,
     logo_dark,
@@ -82,7 +84,9 @@ export const assets = {
     adobe_logo,
     amazon_logo,
     amazon_dark,
-    accenture_dark 
+    accenture_dark,
+    bin_icon,
+    edit_icon
 }
 
 export const JobCategories = [

@@ -64,20 +64,39 @@ export const AppContextProvider = (props) => {
     }
   }
 
+useEffect(() => {
+  fetchJobs();
 
-  useEffect(() => {
+  if (companyToken) {
+    fetchCompanyData()
+  }
 
-    fetchJobs();
-      if (companyToken) {
-      fetchCompanyData()
-      }
-    const storedCompanyToken = localStorage.getItem('companyToken')
+  const storedCompanyToken = localStorage.getItem('companyToken')
+
+  if (storedCompanyToken) {
+    setCompanyToken(storedCompanyToken)
+  }
+}, [companyToken]);
+
+useEffect(() => {
+  const storedCompanyToken = localStorage.getItem('companyToken');
+  if (storedCompanyToken) {
+    setCompanyToken(storedCompanyToken);
+  }
+}, []);
+  // useEffect(() => {
+
+  //   fetchJobs();
+  //     if (companyToken) {
+  //     fetchCompanyData()
+  //     }
+  //   const storedCompanyToken = localStorage.getItem('companyToken')
 
   
-    if (storedCompanyToken) {
-      setCompanyToken(storedCompanyToken)
-    }
-  }, [companyToken]);
+  //   if (storedCompanyToken) {
+  //     setCompanyToken(storedCompanyToken)
+  //   }
+  // }, [companyToken]);
 
   useEffect(() => {
     const syncUser = async () => {

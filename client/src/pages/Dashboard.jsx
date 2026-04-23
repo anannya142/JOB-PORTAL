@@ -1,28 +1,51 @@
 import React, { useContext,useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
 
   const navigate = useNavigate();
-  const {companyData,setCompanyData,setCompanyToken} = useContext(AppContext)
+   const location = useLocation();
+  const {companyData,setCompanyData,setCompanyToken,companyToken} = useContext(AppContext)
+
+ 
   // Function to logout for company
-  const logout = () =>{
-    setCompanyToken(null)
-    localStorage.removeItem('companyToken')
-    setCompanyData(null)
-    navigate('/')
-  } 
-  useEffect(()=>{
-    if(companyData){
-      navigate('/dashboard/manage-jobs')
+  // const logout = () =>{
+  //   setCompanyToken(null)
+  //   localStorage.removeItem('companyToken')
+  //   setCompanyData(null)
+  //   navigate('/')
+  // } 
+  // useEffect(()=>{
+  //   if(companyData){
+  //     navigate('/dashboard/manage-jobs')
 
+  //   }
+    
+
+  // },[companyData])
+useEffect(() => {
+    if (companyData && location.pathname === "/dashboard") {
+      navigate("/dashboard/manage-jobs");
     }
+  }, [companyData, location.pathname]);
 
-  },[companyData])
+   // 🔒 Protect route
+  if (!companyToken) {
+    return <Navigate to="/" />;
+  }
+
+
+  const logout = () => {
+    setCompanyToken(null);
+    localStorage.removeItem("companyToken");
+    setCompanyData(null);
+    navigate("/");
+  };
   return (
     <div className="min-h-screen">
       {/* Navbar for Recruirter Panel */}
@@ -66,11 +89,11 @@ const Dashboard = () => {
               <img className='min-w-4' src={assets.person_tick_icon} alt="" />
               <p className="max-sm-hidden">View Application</p>
             </NavLink>
-
+             
 
           </ul>
         </div>
-        <div className="flex-1 h-full p-2 sm:p-5">
+        <div className="flex-1 h-full p-2">
           <Outlet/>
         </div>
 

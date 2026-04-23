@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import AddJob from './pages/AddJob';
 import ManageJobs from './pages/ManageJobs';
 import ViewApplications from './pages/ViewApplications';
+import UpdateJob from './pages/UpdateJob';
 import 'quill/dist/quill.snow.css';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -25,12 +26,13 @@ const App = () => {
         <Route path='/apply-job/:id' element={<ApplyJob/>}/>
         <Route path='/applications' element={<Application/>}/>
         <Route path='/dashboard/*' element={<Dashboard/>}>
-        {companyToken ? <>
+        {/* {companyToken ? <> */}
         <Route path='add-job' element={<AddJob/>}/>
         <Route path='manage-jobs' element={<ManageJobs/>}/>
         <Route path='view-applications' element={<ViewApplications/>}/>
         
-        </> : null}
+        <Route path='update-job/:id' element={<UpdateJob />} />
+        {/* </ null}> : */}
         
         </Route>
         
